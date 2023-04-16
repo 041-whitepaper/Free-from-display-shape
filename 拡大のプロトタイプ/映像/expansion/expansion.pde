@@ -1,6 +1,6 @@
 PShape svg; // SVG画像を格納する変数
-float duration = 80; // 拡大、縮小の周期（秒）
-float scaleMin = 0.1; // 最小倍率
+float duration = 96; // 拡大、縮小の周期（秒）、片道400mmの場合96
+float scaleMin = 0.17; // 最小倍率
 float scaleMax = 1; // 最大倍率
 float initialScale = 0.7; // 初期倍率
 
