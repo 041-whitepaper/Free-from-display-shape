@@ -4,7 +4,7 @@ float scaleMin = 0.1; // 最小倍率
 float scaleMax = 1.0; // 最大倍率
 
 void setup() {
-  size(1920, 1080); // ウィンドウサイズ
+  size(1366, 768); // ウィンドウサイズ
   svg = loadShape("image.svg"); // SVG画像を読み込む
 }
 
