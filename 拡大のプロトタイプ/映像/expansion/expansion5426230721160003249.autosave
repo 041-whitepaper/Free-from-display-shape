@@ -1,0 +1,59 @@
+// csvファイルのパス
+String csvPath = "image.svg";
+// 画像のサイズ
+int imgSize = 100;
+// 拡大率
+float scale = 2.0;
+// 拡大縮小の間隔（ミリ秒）
+int interval = 30000;
+// 前回の切り替え時刻
+int lastSwitch = 0;
+// 拡大縮小のフラグ
+boolean isScaled = false;
+// PImage型の変数
+PImage img;
+
+void setup() {
+  // csvファイルを読み込む
+  Table table = loadTable(csvPath);
+  // PImageに変換する
+  img = createImage(table.getColumnCount(), table.getRowCount(), RGB);
+  img.loadPixels();
+  for (int i = 0; i < table.getRowCount(); i++) {
+    TableRow row = table.getRow(i);
+    for (int j = 0; j < table.getColumnCount(); j++) {
+      // csvファイルの値を色にする
+      int c = color(row.getInt(j));
+      // ピクセル配列に代入する
+      img.pixels[i * table.getColumnCount() + j] = c;
+    }
+  }
+  img.updatePixels();
+  // ウィンドウサイズを設定する
+  size(imgSize, imgSize);
+}
+
+void draw() {
+  // 経過時間を取得する
+  int elapsed = millis();
+  // 前回の切り替えからinterval以上経過したら
+  if (elapsed - lastSwitch > interval) {
+    // 拡大縮小のフラグを反転する
+    isScaled = !isScaled;
+    // 切り替え時刻を更新する
+    lastSwitch = elapsed;
+  }
+  // 拡大縮小のフラグに応じて画像のサイズを変更する
+  if (isScaled) {
+    // 拡大する場合はscale倍にする
+    img.resize(int(imgSize * scale), int(imgSize * scale));
+  } else {
+    // 縮小する場合は元のサイズに戻す
+    img.resize(imgSize, imgSize);
+  }
+  // 背景を白にする
+  background(255);
+  // 中央に画像を表示する
+  imageMode(CENTER);
+  image(img, width / 2, height / 2);
+}
